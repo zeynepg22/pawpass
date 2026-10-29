@@ -1,4 +1,4 @@
-package io.github.zeynepg22.pawpass.model;
+package pawpass.model;
 
 public enum Placement {
     CABIN,
