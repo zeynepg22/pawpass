@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TravelEligibilityChecker.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">PawPass</a> &gt; <a href="index.source.html" class="el_package">pawpass.checker</a> &gt; <span class="el_source">TravelEligibilityChecker.java</span></div><h1>TravelEligibilityChecker.java</h1><pre class="source lang-java linenums">package pawpass.checker;
+
+import pawpass.model.Carrier;
+import pawpass.model.DecisionReason;
+import pawpass.model.Flight;
+import pawpass.model.Pet;
+import pawpass.model.Placement;
+import pawpass.model.Species;
+import pawpass.model.TravelDecision;
+import pawpass.rules.BreedCategory;
+import pawpass.rules.BreedPolicy;
+import pawpass.validation.InputValidator;
+
+import java.util.ArrayList;
+import java.util.List;
+
+<span class="fc" id="L17">public class TravelEligibilityChecker {</span>
+
+    private static final double MAX_CABIN_WEIGHT_KG = 8.0;
+    private static final double MAX_DOG_WEIGHT_IN_HOLD_KG = 14.0;
+    private static final double MAX_CAT_WEIGHT_IN_HOLD_KG = 10.0;
+
+    private static final String UNITED_KINGDOM_ISO_CODE = &quot;GB&quot;;
+    private static final String UNITED_KINGDOM_COMMON_CODE = &quot;UK&quot;;
+
+<span class="fc" id="L26">    private final InputValidator validator = new InputValidator();</span>
+<span class="fc" id="L27">    private final BreedPolicy breedPolicy = new BreedPolicy();</span>
+
+    public TravelDecision check(Pet pet, Carrier carrier, Flight flight) {
+<span class="fc" id="L30">        validator.validate(pet, carrier, flight);</span>
+
+<span class="fc" id="L32">        List&lt;DecisionReason&gt; problems = findProblems(pet, flight);</span>
+<span class="fc bfc" id="L33" title="All 2 branches covered.">        if (!problems.isEmpty()) {</span>
+<span class="fc" id="L34">            return new TravelDecision(Placement.NOT_ALLOWED, problems);</span>
+        }
+<span class="fc" id="L36">        return choosePlacement(pet, carrier);</span>
+    }
+
+    private List&lt;DecisionReason&gt; findProblems(Pet pet, Flight flight) {
+<span class="fc" id="L40">        List&lt;DecisionReason&gt; problems = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (isUnitedKingdom(flight.destinationCountryCode())) {</span>
+<span class="fc" id="L43">            problems.add(DecisionReason.ROUTE_NOT_ALLOWED);</span>
+        }
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        if (breedPolicy.categorize(pet.breed()) == BreedCategory.BANNED) {</span>
+<span class="fc" id="L46">            problems.add(DecisionReason.BANNED_BREED);</span>
+        }
+<span class="fc bfc" id="L48" title="All 2 branches covered.">        if (!pet.rabiesVaccinated()) {</span>
+<span class="fc" id="L49">            problems.add(DecisionReason.MISSING_RABIES_VACCINE);</span>
+        }
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (!pet.microchipped()) {</span>
+<span class="fc" id="L52">            problems.add(DecisionReason.MISSING_MICROCHIP);</span>
+        }
+<span class="fc" id="L54">        return problems;</span>
+    }
+
+    private TravelDecision choosePlacement(Pet pet, Carrier carrier) {
+<span class="fc" id="L58">        BreedCategory category = breedPolicy.categorize(pet.breed());</span>
+<span class="fc" id="L59">        double totalWeight = pet.weightKg() + carrier.weightKg();</span>
+
+<span class="fc bfc" id="L61" title="All 2 branches covered.">        if (category == BreedCategory.DANGEROUS) {</span>
+<span class="fc" id="L62">            return new TravelDecision(Placement.TURKISH_CARGO_ONLY, List.of(DecisionReason.DANGEROUS_BREED));</span>
+        }
+<span class="fc bfc" id="L64" title="All 2 branches covered.">        if (totalWeight &lt;= MAX_CABIN_WEIGHT_KG) {</span>
+<span class="fc" id="L65">            return new TravelDecision(Placement.CABIN, List.of());</span>
+        }
+<span class="fc bfc" id="L67" title="All 2 branches covered.">        if (category == BreedCategory.SNUB_NOSED) {</span>
+<span class="fc" id="L68">            return new TravelDecision(Placement.NOT_ALLOWED, List.of(DecisionReason.SNUB_NOSED_NOT_ALLOWED_IN_HOLD));</span>
+        }
+<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (isTooHeavyForHold(pet)) {</span>
+<span class="fc" id="L71">            return new TravelDecision(Placement.TURKISH_CARGO_ONLY, List.of(DecisionReason.TOO_HEAVY_FOR_HOLD));</span>
+        }
+<span class="fc" id="L73">        return new TravelDecision(Placement.CARGO_HOLD, List.of());</span>
+    }
+
+    private boolean isTooHeavyForHold(Pet pet) {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        if (pet.species() == Species.DOG) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">            return pet.weightKg() &gt; MAX_DOG_WEIGHT_IN_HOLD_KG;</span>
+        }
+<span class="fc bfc" id="L80" title="All 2 branches covered.">        return pet.weightKg() &gt; MAX_CAT_WEIGHT_IN_HOLD_KG;</span>
+    }
+
+    private boolean isUnitedKingdom(String countryCode) {
+<span class="fc bfc" id="L84" title="All 4 branches covered.">        return countryCode.equals(UNITED_KINGDOM_ISO_CODE) || countryCode.equals(UNITED_KINGDOM_COMMON_CODE);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

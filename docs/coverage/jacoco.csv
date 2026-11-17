@@ -1,0 +1,12 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+PawPass,pawpass.validation,InputValidator,0,73,0,22,0,14,0,14,0,3
+PawPass,pawpass.rules,BreedCategory,0,27,0,0,0,5,0,1,0,1
+PawPass,pawpass.rules,BreedPolicy,0,57,0,10,0,14,0,8,0,3
+PawPass,pawpass.checker,TravelEligibilityChecker,0,171,0,28,0,33,0,20,0,6
+PawPass,pawpass.model,Placement,0,27,0,0,0,5,0,1,0,1
+PawPass,pawpass.model,Carrier,0,6,0,0,0,1,0,1,0,1
+PawPass,pawpass.model,Flight,0,6,0,0,0,1,0,1,0,1
+PawPass,pawpass.model,Species,0,15,0,0,0,3,0,1,0,1
+PawPass,pawpass.model,DecisionReason,0,45,0,0,0,8,0,1,0,1
+PawPass,pawpass.model,TravelDecision,0,9,0,0,0,1,0,1,0,1
+PawPass,pawpass.model,Pet,0,18,0,0,0,1,0,1,0,1

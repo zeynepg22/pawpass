@@ -1,0 +1,56 @@
+[INFO] Scanning for projects...
+[INFO] Loaded 24527 auto-discovered prefixes for remote repository central (prefixes-central.txt)
+[INFO] 
+[INFO] --------------------< io.github.zeynepg22:pawpass >---------------------
+[INFO] Building PawPass 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Loaded 64 auto-discovered prefixes for remote repository apache.snapshots (prefixes-apache.snapshots.txt)
+[INFO] 
+[INFO] --- jacoco:0.8.12:prepare-agent (prepare-agent) @ pawpass ---
+[INFO] argLine set to -javaagent:/Users/zeynepgunden/.m2/repository/org/jacoco/org.jacoco.agent/0.8.12/org.jacoco.agent-0.8.12-runtime.jar=destfile=/Users/zeynepgunden/IdeaProjects/pawpass/target/jacoco.exec
+[INFO] 
+[INFO] --- resources:3.5.0:resources (default-resources) @ pawpass ---
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.16.0:compile (default-compile) @ pawpass ---
+[INFO] Recompiling the module because of changed source code.
+[INFO] Compiling 11 source files with javac [debug release 21] to target/classes
+[INFO] 
+[INFO] --- resources:3.5.0:testResources (default-testResources) @ pawpass ---
+[INFO] skip non existing resourceDirectory /Users/zeynepgunden/IdeaProjects/pawpass/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.16.0:testCompile (default-testCompile) @ pawpass ---
+[INFO] Recompiling the module because of changed dependency.
+[INFO] Compiling 3 source files with javac [debug release 21] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.5.2:test (default-test) @ pawpass ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running pawpass.checker.TravelEligibilityCheckerTest
+[INFO] Tests run: 22, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.076 s -- in pawpass.checker.TravelEligibilityCheckerTest
+[INFO] Running pawpass.rules.BreedPolicyTest
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in pawpass.rules.BreedPolicyTest
+[INFO] Running pawpass.validation.InputValidatorTest
+[INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.008 s -- in pawpass.validation.InputValidatorTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 41, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jar:3.5.1:jar (default-jar) @ pawpass ---
+[INFO] Building jar: /Users/zeynepgunden/IdeaProjects/pawpass/target/pawpass-1.0-SNAPSHOT.jar
+[INFO] 
+[INFO] --- jacoco:0.8.12:report (report) @ pawpass ---
+[INFO] Loading execution data file /Users/zeynepgunden/IdeaProjects/pawpass/target/jacoco.exec
+[INFO] Analyzed bundle 'PawPass' with 11 classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  1.911 s
+[INFO] Finished at: 2026-11-17T17:57:01+03:00
+[INFO] ------------------------------------------------------------------------
