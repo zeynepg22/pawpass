@@ -41,7 +41,6 @@ public class TravelEligibilityCheckerTest {
         return new Pet(species, breed, weightKg, true, true);
     }
 
-    // Normal case: a small cat travels in the cabin
     @Test
     public void testCheckCatInCabin() {
         Pet cat = healthyPet(Species.CAT, "Tabby", 4.0);
@@ -50,7 +49,6 @@ public class TravelEligibilityCheckerTest {
         assertEquals(expected, actual);
     }
 
-    // Normal case: a medium dog travels in the cargo hold
     @Test
     public void testCheckDogInHold() {
         Pet dog = healthyPet(Species.DOG, "Golden Retriever", 10.0);
@@ -59,7 +57,6 @@ public class TravelEligibilityCheckerTest {
         assertEquals(expected, actual);
     }
 
-    // Boundary values: cabin limit is 8 kg for pet + carrier (carrier is 2 kg)
     @ParameterizedTest
     @CsvSource({
             "5.9, CABIN",
@@ -72,7 +69,6 @@ public class TravelEligibilityCheckerTest {
         assertEquals(expected, actual);
     }
 
-    // Boundary values: a dog in the cargo hold may weigh at most 14 kg
     @ParameterizedTest
     @CsvSource({
             "13.9, CARGO_HOLD",
@@ -85,7 +81,6 @@ public class TravelEligibilityCheckerTest {
         assertEquals(expected, actual);
     }
 
-    // Boundary: a cat just above its 10 kg hold limit goes to Turkish Cargo
     @Test
     public void testCheckCatAboveHoldLimit() {
         Pet cat = healthyPet(Species.CAT, "Tabby", 10.1);
@@ -94,7 +89,6 @@ public class TravelEligibilityCheckerTest {
         assertEquals(expected, actual);
     }
 
-    // Decision table: breed category combined with a pet that fits the cabin (4 kg) or not (10 kg)
     @ParameterizedTest
     @CsvSource({
             "Golden Retriever, 4.0, CABIN",
@@ -110,7 +104,6 @@ public class TravelEligibilityCheckerTest {
         assertEquals(expected, actual);
     }
 
-    // A banned breed is refused even if it is small enough for the cabin
     @Test
     public void testCheckBannedBreed() {
         Pet dog = healthyPet(Species.DOG, "Pitbull Terrier", 4.0);
@@ -119,7 +112,6 @@ public class TravelEligibilityCheckerTest {
         assertEquals(expected, actual);
     }
 
-    // A pet without a rabies vaccine is refused
     @Test
     public void testCheckMissingVaccine() {
         Pet cat = new Pet(Species.CAT, "Tabby", 4.0, true, false);
@@ -128,7 +120,6 @@ public class TravelEligibilityCheckerTest {
         assertEquals(expected, actual);
     }
 
-    // A pet without a microchip is refused
     @Test
     public void testCheckMissingMicrochip() {
         Pet cat = new Pet(Species.CAT, "Tabby", 4.0, false, true);
@@ -137,7 +128,6 @@ public class TravelEligibilityCheckerTest {
         assertEquals(expected, actual);
     }
 
-    // Route rule: destination GB (ISO code of the United Kingdom) is refused
     @Test
     public void testCheckDestinationGB() {
         Pet cat = healthyPet(Species.CAT, "Tabby", 4.0);
@@ -146,7 +136,6 @@ public class TravelEligibilityCheckerTest {
         assertEquals(expected, actual);
     }
 
-    // Route rule: destination UK (common code of the United Kingdom) is refused too
     @Test
     public void testCheckDestinationUK() {
         Pet cat = healthyPet(Species.CAT, "Tabby", 4.0);
@@ -155,7 +144,6 @@ public class TravelEligibilityCheckerTest {
         assertEquals(expected, actual);
     }
 
-    // Every problem is reported, not only the first one
     @Test
     public void testCheckAllProblemsReported() {
         Pet dog = new Pet(Species.DOG, "Pitbull Terrier", 20.0, false, false);
@@ -169,7 +157,6 @@ public class TravelEligibilityCheckerTest {
         assertEquals(expected, actual);
     }
 
-    // Exception case: invalid input is rejected before any rule is applied
     @Test
     public void testCheckInvalidInput() {
         Pet cat = healthyPet(Species.CAT, "Tabby", -1.0);
